@@ -26,22 +26,21 @@ public class CarController : MonoBehaviour
             {
                 Debug.Log(speed);
                 startPos = Input.mousePosition;
-                i++;
             }
             else if (Input.GetMouseButtonUp(0) && speed == 0)
             {
                 Debug.Log(speed);
                 Vector2 endPos = Input.mousePosition;
-                lenght = endPos.x - startPos.x;
-
-                speed = lenght / 500.0f;
+                lenght = endPos.x - startPos.x;                
+                speed = lenght / 1000.0f;
 
                 GetComponent<AudioSource>().Play();
+                i++;
             }
         }
         transform.Translate(speed, 0, 0);
         speed *= 0.98f;
-        if (Mathf.Abs(speed) < 0.1f)
+        if (Mathf.Abs(speed) < 0.01f)
         {
             speed = 0;
         }

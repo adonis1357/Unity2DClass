@@ -13,6 +13,7 @@ public class CarGameManager : MonoBehaviour
     GameObject resultText;
     string Result = "";
     public bool tf = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,32 +27,37 @@ public class CarGameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-
     {
-        if (tf)
+        if (tf && carController.speed == 0)
         {
-            if (carController.i >= 5)
-            {
-                Result = "lose";
-                tf = false;
-                resultText.GetComponent<TMP_Text>().text = "Result : " + Result;
-            }
 
             float length = flag.transform.position.x - car.transform.position.x;
             distanceText.GetComponent<TMP_Text>().text = "Distance : " + length.ToString("F2") + "m";
-            if (length <= 0.5f && length >= 0.0f)
+            if((RouletteController.CarCount - carController.i) > 0)
+            {
+                resultText.GetComponent<TMP_Text>().text = "Count : " + (RouletteController.CarCount - carController.i);
+            }
+            
+            if (length <= 1.5f && length >= -1.5f)
             {
                 Result = "win";
                 tf = false;
                 resultText.GetComponent<TMP_Text>().text = "Result : " + Result;
-                //Debug.Log("win");            
+                //Debug.Log("win");
             }
-            if (length < 0)
+            else if (length < -1.5)
             {
                 Result = "lose";
                 tf = false;
                 resultText.GetComponent<TMP_Text>().text = "Result : " + Result;
                 //Debug.Log("lose");
+            }
+
+            else if (carController.i >= RouletteController.CarCount)
+            {
+                Result = "lose";
+                tf = false;
+                resultText.GetComponent<TMP_Text>().text = "Result : " + Result;
             }
         }
     }
